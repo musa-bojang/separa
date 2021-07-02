@@ -308,8 +308,8 @@ if ($isLoggedIn) {
 
                 // names match option values in controlling select box
                 Working: {
-                    text: ['construction', 'working 2', 'working 3', 'working 4', 'working 5'],
-                    value: ['construction', 'working 2', 'working 3', 'working 4', 'working 5']
+                    text: ['construction', 'mechanic', 'working 3', 'working 4', 'working 5'],
+                    value: ['construction', 'mechanic', 'working 3', 'working 4', 'working 5']
                 },
                 Education: {
                     text: ['education 1', 'education 2', 'education 3', 'education 4'],
