@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once "model/Util.php";
+$util = new Util();
+require_once "model/authCookieSessionValidate.php";
+if ($isLoggedIn) {
+    // $util->redirect("profile_upload.php");
+} else {
+    $util->redirect("index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,15 +48,36 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                <?php if(isset($_SESSION['role'])){
+                        if($_SESSION['role']==='user'){
+                            ?>
+                            <li class="nav-item">
+                            <a class="nav-link" href="profile_upload.php">Upload Anonymous Profile</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="model/logout.php">Log Keluar</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile_upload.php">Upload Anonymous Profile</a>
-                    </li>
-                    <li class="nav-item">
+                        <?php 
+                        } else {  ?>
+                            <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="home.php">UTAMA</a>
+                        </li>
+
+                        <li class="nav-item">
                         <a class="nav-link" href="track_application.php">Check Application</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="all_application.php">ALL Applications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="model/logout.php">Log Keluar</a>
+                    </li>
+                    <?php
+                        }
+                    
+                    }
+                    
+                    ?>
 
                 </ul>
 
@@ -62,10 +94,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <select class="form-select" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option selected disabled>Department</option>
+                                        <option value="atm">ATM</option>
+                                        <option value="jkm">JKM</option>
+                                        <option value="mara">MARA</option>
                                     </select>
                                 </div>
                                 <div class="col-6">

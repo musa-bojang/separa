@@ -279,6 +279,10 @@ h6 {
   max-width: 960px;
 }
 
+.wrapper--w970 {
+  max-width: 1000px;
+}
+
 .wrapper--w780 {
   max-width: 780px;
 }

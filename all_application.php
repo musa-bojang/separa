@@ -5,11 +5,6 @@ $util = new Util();
 require_once "model/authCookieSessionValidate.php";
 if ($isLoggedIn) {
     // $util->redirect("profile_upload.php");
-    if(isset($_SESSION['role'])){
-        if($_SESSION['role'] ==='admin'){
-            $util->redirect("all_application.php");
-        }
-    }
 } else {
     $util->redirect("index.php");
 }
@@ -94,29 +89,59 @@ if ($isLoggedIn) {
         </div>
     </nav> 
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
+        <div class="wrapper wrapper--w990" style="margin-top: 30px; margin-left: 50px; margin-right:50px;">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">anonymous profile</h6>
+                </div>
                 <div class="card-body">
-                    <!-- <h2 class="title">Registration Form</h2> -->
-                    <form method="POST" id="demoForm" enctype="multipart/form-data" action="upload.php">
-                        <div class="row row-space">
-
-                            <div class="file-input">
-                                <input type="file" id="file" name="file" class="file" required>
-                                <label for="file">
-                                    <p id="excel">Upload CSV file</p>
-                                    <p class="file-name" id="file-name"></p>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="row row-space" style="margin-top: 20px;">
-                            <input class="btn btn--radius-2 btn--blue" type="submit" name="submit" value="Import">
-                        </div>
-                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr> 
+                                <th>id</th>
+                                    <th>ID</th>
+                                    <th>Dept</th>
+                                    <th>Career</th>
+                                    <th>Sektor</th>
+                                    <th>Sub-sektor</th>
+                                    <th>Lokasi</th>
+                                    <th>Daerah</th>
+                                    <th>Bangsa</th>
+                                    <th>Jantina</th>
+                                    <th>Umur</th>
+                                    <th>Skill</th>
+                                    <th>Status</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                <th>id</th>
+                                    <th>ID</th>
+                                    <th>Dept</th>
+                                    <th>Career</th>
+                                    <th>Sektor</th>
+                                    <th>Sub-sektor</th>
+                                    <th>Lokasi</th>
+                                    <th>Daerah</th>
+                                    <th>Bangsa</th>
+                                    <th>Jantina</th>
+                                    <th>Umur</th>
+                                    <th>Skill</th>
+                                    <th>Status</th>
+                                    <th>Remark</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </div>
-        
     </div>
     <!-- Begin Page Content -->
 
@@ -147,50 +172,7 @@ if ($isLoggedIn) {
 
     <!-- Main JS-->
     <script src="js/global.js"></script>
-    <script>
-        $(document).ready(function() {
-            // initialize with defaults
-            $("#input-id").fileinput();
-
-            // with plugin options
-            $("#input-id").fileinput({
-                'uploadUrl': '/path/to/your-upload-api',
-                'previewFileType': 'any'
-            });
-        });
-
-        const file = document.querySelector('#file');
-        file.addEventListener('change', (e) => {
-            // Get the selected file
-            const [file] = e.target.files;
-            // Get the file name and size
-            const {
-                name: fileName,
-                size
-            } = file;
-            // Convert size in bytes to kilo bytes
-            const fileSize = (size / 1000).toFixed(2);
-            // Set the text content
-            const fileNameAndSize = `${fileName} - ${fileSize}KB`;
-            document.getElementById("excel").style.display = "none";
-            document.querySelector('.file-name').textContent = fileNameAndSize;
-        });
-
-        window.onscroll = function() {
-            myFunction()
-        };
-
-        var navbar = document.getElementById("navbar");
-        var sticky = navbar.offsetTop;
-
-        function myFunction() {
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add("sticky")
-            } else {
-                navbar.classList.remove("sticky");
-            }
-        }
-    </script>
+ 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
