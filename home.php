@@ -31,7 +31,8 @@ if ($isLoggedIn) {
     <!-- Vendor CSS-->
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all">
     <link href="vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!-- Main CSS-->
     <link href="css/main.css" rel="stylesheet" media="all">
 </head>
@@ -52,6 +53,9 @@ if ($isLoggedIn) {
                             ?>
                             <li class="nav-item">
                             <a class="nav-link" href="profile_upload.php">Upload Anonymous Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="department_upload.php">Uploaded Profiles</a>
                         </li>
                         <?php 
                         } else {  ?>
@@ -81,6 +85,7 @@ if ($isLoggedIn) {
             </div>
         </div>
     </nav>
+
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
@@ -101,9 +106,10 @@ if ($isLoggedIn) {
                             </div>
                             <div class="col-2">
                                 <div class="input-group input-group-sm mb-3">
-                                    <select name="skills" id="skills" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                               
+                                    <select  type="text" name="skills" id="skills" class="form-select form-select-sm">
                                         <option value="">Kemahiran</option>
-                                        <option value="Engineer">Engineer </option>
+                                        <option value="Engineer" data-value="Engineer">Engineer </option>
                                         <option value="Teahcer">Teahcer</option>
                                         <option value="Physician">Physician</option>
                                         <option value="Lawyer">Lawyer</option>
@@ -126,7 +132,6 @@ if ($isLoggedIn) {
                                         <option value="Hairdresser">Hairdresser</option>
                                         <option value="Artist">Artist</option>
                                         <option value="Librarian">Librarian</option>
-                                       
                                     </select>
                                 </div>
                             </div>
@@ -137,9 +142,9 @@ if ($isLoggedIn) {
                                     <!-- <div class="rs-select2 js-select-simple select--no-search"> -->
                                     <select name="category" id="category" class="form-select form-select-sm" aria-label=".form-select-sm example">
                                         <option value="">Career</option>
-                                        <option value="Working">working</option>
-                                        <option value="Education">education</option>
-                                        <option value="Entrepreneurship">entrepreneurship</option>
+                                        <option value="Pekerjaan">Pekerjaan</option>
+                                        <option value="Pendidikan">Pendidikan</option>
+                                        <option value="Keusahawanan">Keusahawanan</option>
                                     </select>
                                     <div class="select-dropdown"></div>
                                     <!-- </div> -->
@@ -272,7 +277,18 @@ if ($isLoggedIn) {
 <script>
     // object literal holding data for option elements
     $(document).ready(function() {
-
+        $("#skills").select2({
+  tags: true
+});
+$('#choices').select2({
+ tags: true
+});
+$('#department').select2({
+ tags: true
+});
+$('#umur').select2({
+ tags: true
+});
         $("#display").click(function() {
 
             var formData = {
@@ -285,6 +301,7 @@ if ($isLoggedIn) {
                 'choices': document.getElementById('choices').value,
                 'umur': document.getElementById('umur').value
             };
+           
             // var department = document.getElementById("department").value;
             //    alert(department)
             $.ajax({ //create an ajax request to display.php
@@ -307,17 +324,17 @@ if ($isLoggedIn) {
             'choices': { // name of associated select box
 
                 // names match option values in controlling select box
-                Working: {
-                    text: ['construction', 'working 2', 'working 3', 'working 4', 'working 5'],
-                    value: ['construction', 'working 2', 'working 3', 'working 4', 'working 5']
+                Pekerjaan: {
+                    text: ['Pembinaan', 'Perkilangan', 'Pertanian', 'Perladangan', 'Pendidikan', 'Perubatan', 'Perkapalan', 'Teknologi'],
+                    value: ['Pembinaan', 'Perkilangan', 'Pertanian', 'Perdagangan', 'Pendidikan', 'Perubatan', 'Perkapalan', 'Teknologi']
                 },
-                Education: {
-                    text: ['education 1', 'education 2', 'education 3', 'education 4'],
-                    value: ['education 1', 'education 2', 'education 3', 'education 4']
+                Pendidikan: {
+                    text: ['Automotif', 'Kimpalan', 'Pembinaan', 'Permesinan', 'Teknologi Maklumat', 'Pengurusan', 'Kesihatan', 'Sains dan Teknologi', 'Seni Bina'],
+                    value: ['Automotif', 'Kimpalan', 'Pembinaan', 'Permesinan', 'Teknologi Maklumat', 'Pengurusan', 'Kesihatan', 'Sains dan Teknologi', 'Seni Bina']
                 },
-                Entrepreneurship: {
-                    text: ['entrepreneurship 1 ', 'entrepreneurship 2', 'entrepreneurship 3', 'entrepreneurship 4'],
-                    value: ['entrepreneurship 1 ', 'entrepreneurship 2', 'entrepreneurship 3', 'entrepreneurship 4']
+                Keusahawanan: {
+                    text: ['Borong dan Peruncitan', 'Industri F & B', 'Pengangkutan dan Perdagangan', 'Servis Personal dan Profesional', 'Servis Teknikal dan Sainstifik', 'Administratif dan Servis Sokongan Industri Kesihatan', 'Hartanah Pendidikan'],
+                    value: ['Borong dan Peruncitan', 'Industri F & B', 'Pengangkutan dan Perdagangan', 'Servis Personal dan Profesional', 'Servis Teknikal dan Sainstifik', 'Administratif dan Servis Sokongan Industri Kesihatan', 'Hartanah Pendidikan']
                     
                 }
 

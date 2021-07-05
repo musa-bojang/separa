@@ -58,6 +58,11 @@ $sysid = $_GET["systemid"];
      $remarks = $row['remarks'];
     
  }
+ if($_SESSION['role']==='user'){
+  $decider = 'disabled';
+ }else {
+    $decider = '';
+ }
 
 ?>
 <body>
@@ -77,6 +82,12 @@ $sysid = $_GET["systemid"];
                             <li class="nav-item">
                             <a class="nav-link" href="profile_upload.php">Upload Anonymous Profile</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="department_upload.php">Uploaded Profiles</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="model/logout.php">Log Keluar</a>
+                    </li>
                         <?php 
                         } else {  ?>
                             <li class="nav-item">
@@ -180,7 +191,7 @@ $sysid = $_GET["systemid"];
                             </div>
                             <div class="col-2">
                                 <div class="input-group input-group-sm mb-3">
-                                <select name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
+                                <select <?= $decider;?> name="status" class="form-select form-select-sm" aria-label=".form-select-sm example" required>
                                         <option value="<?= $status;?>"><?= $status;?></option>
                                         <option value="Available">Available</option>
                                         <option value="Not Available">Not Available</option>
@@ -191,20 +202,20 @@ $sysid = $_GET["systemid"];
                         <div class="row row-space">
                            
                             <div class="input-group input-group-sm mb-3">
-                                    <textarea type="text" name="remark"  class="form-control" aria-label="remark"  aria-describedby="inputGroup-sizing-sm" required><?= $remarks;?></textarea>
+                                    <textarea <?= $decider;?> type="text" name="remark"  class="form-control" aria-label="remark"  aria-describedby="inputGroup-sizing-sm" required><?= $remarks;?></textarea>
                                 </div>
                            
                            
-                        </div>
+                        </div> 
                         <div class="row row-space">
                             <div class="col-2">
                             <div class="input-group input-group-sm mb-3">
-                                  
+                            <input type="button" id="deletebtn"  class="btn btn-danger"  value="Delete" aria-describedby="inputGroup-sizing-sm">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group input-group-sm mb-3">
-                                <input type="submit"   class="btn btn-primary"  value="Hantar" aria-describedby="inputGroup-sizing-sm">
+                                <input type="submit"   class="btn btn-primary" <?= $decider;?>  value="Hantar" aria-describedby="inputGroup-sizing-sm">
                                 </div>
                             </div>
                         </div>
@@ -257,6 +268,34 @@ $sysid = $_GET["systemid"];
 				contentType: false,
 				processData: false
         });
+     });
+     $("#deletebtn").click(function() {
+        var deleteid = <?php echo json_encode($_GET["systemid"]); ?>;
+        // alert(deleteid)
+        let isExecuted = confirm("Are you sure to execute this action?");
+        if(isExecuted){
+            var formData = new FormData();
+        formData.append('deleteid', deleteid);
+        $.ajax({
+            url : "model/delete.php",
+            type : "POST",
+             data : formData,
+             dataType : 'json',
+             success : function(res){
+                 if(res.success==='deleted'){
+                    alert(res.success);
+                    window.location.href = "department_upload.php";
+                 }
+                 
+             },
+             cache: false,
+				contentType: false,
+				processData: false
+        });
+        }else {
+
+        }
+        
      });
    });
 </script>

@@ -1,10 +1,16 @@
 <?php
 session_start();
+
 require_once "model/Util.php";
 $util = new Util();
 require_once "model/authCookieSessionValidate.php";
 if ($isLoggedIn) {
     // $util->redirect("profile_upload.php");
+    if(isset($_SESSION['role'])){
+        if($_SESSION['role'] ==='admin'){
+            $util->redirect("all_application.php");
+        }
+    }
 } else {
     $util->redirect("index.php");
 }
@@ -115,8 +121,6 @@ if ($isLoggedIn) {
                                     <th>Jantina</th>
                                     <th>Umur</th>
                                     <th>Skill</th>
-                                    <th>Status</th>
-                                    <th>Remark</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -133,8 +137,6 @@ if ($isLoggedIn) {
                                     <th>Jantina</th>
                                     <th>Umur</th>
                                     <th>Skill</th>
-                                    <th>Status</th>
-                                    <th>Remark</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -171,7 +173,7 @@ if ($isLoggedIn) {
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script src="js/demo/department_upload.js"></script>
 
     <!-- Main JS-->
     <script src="js/global.js"></script>

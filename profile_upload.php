@@ -64,6 +64,9 @@ if ($isLoggedIn) {
                             <a class="nav-link" href="profile_upload.php">Upload Anonymous Profile</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="department_upload.php">Uploaded Profiles</a>
+                        </li>
+                        <li class="nav-item">
                         <a class="nav-link" href="model/logout.php">Log Keluar</a>
                     </li>
                         <?php 

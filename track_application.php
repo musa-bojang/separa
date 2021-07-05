@@ -55,6 +55,9 @@ if ($isLoggedIn) {
                             <a class="nav-link" href="profile_upload.php">Upload Anonymous Profile</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="department_upload.php">Uploaded Profiles</a>
+                        </li>
+                        <li class="nav-item">
                         <a class="nav-link" href="model/logout.php">Log Keluar</a>
                     </li>
                         <?php 
@@ -89,31 +92,36 @@ if ($isLoggedIn) {
             <div class="card card-4">
                 <div class="card-body">
                     <!-- <h2 class="title">Registration Form</h2> -->
-                    <form method="POST" id="demoForm">
+                    <div >
                         <div class="container">
                             <div class="row">
                                 <div class="col-6">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected disabled>Department</option>
+                                    <select id="get_department" class="form-select" aria-label="Default select example">
+                                        <option value="" disabled>Department</option>
                                         <option value="atm">ATM</option>
                                         <option value="jkm">JKM</option>
-                                        <option value="mara">MARA</option>
+                                        <option value="MARA">MARA</option>
                                     </select>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="basic-addon1">ID</span>
-                                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                                        <span class="input-group-text" >ID</span>
+                                        <input type="text" class="form-control" id="get_id" placeholder="ID " aria-label="Username" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                                 <div class="col">
-                                <button type="button" class="btn btn-secondary btn-sm">Search</button>
+                                <button type="submit" id="trackPerson" class="btn btn-secondary btn-sm">Search</button>
                                
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="wrapper wrapper--w780">
+            <div class="list-group" id="responsecontainer">
+
             </div>
         </div>
     </div>
@@ -127,137 +135,31 @@ if ($isLoggedIn) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <!-- Main JS-->
     <script src="js/global.js"></script>
+    <script>
+    $(document).ready(function(){
+        $("#trackPerson").click(function() {
+
+var formData = {
+    'get_department': document.getElementById('get_department').value,
+    'get_id': document.getElementById('get_id').value,
+};
+$.ajax({
+          url: "model/tracker.php",
+          type : "GET",
+          data : formData,
+          dataType: "html",
+          success : function(response){
+            $("#responsecontainer").html(response);
+          }
+
+      });
+        });
+    });
+                   
+</script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-<script>
-    // object literal holding data for option elements
 
-    var Select_List_Data = {
-
-        'choices': { // name of associated select box
-
-            // names match option values in controlling select box
-            working: {
-                text: ['working 1', 'working 2', 'working 3', 'working 4', 'working 5'],
-                value: ['working 1', 'working 2', 'working 3', 'working 4', 'working 5']
-            },
-            education: {
-                text: ['education 1', 'education 2', 'education 3', 'education 4'],
-                value: ['education 1', 'education 2', 'education 3', 'education 4']
-            },
-            entrepreneurship: {
-                // example without values
-                text: ['entrepreneurship 1 ', 'entrepreneurship 2', 'entrepreneurship 3', 'entrepreneurship 4']
-            }
-
-        }
-    };
-
-    // removes all option elements in select box 
-    // removeGrp (optional) boolean to remove optgroups
-    function removeAllOptions(sel, removeGrp) {
-        var len, groups, par;
-        if (removeGrp) {
-            groups = sel.getElementsByTagName('optgroup');
-            len = groups.length;
-            for (var i = len; i; i--) {
-                sel.removeChild(groups[i - 1]);
-            }
-        }
-
-        len = sel.options.length;
-        for (var i = len; i; i--) {
-            par = sel.options[i - 1].parentNode;
-            par.removeChild(sel.options[i - 1]);
-        }
-    }
-
-    function appendDataToSelect(sel, obj) {
-        var f = document.createDocumentFragment();
-        var labels = [],
-            group, opts;
-
-        function addOptions(obj) {
-            var f = document.createDocumentFragment();
-            var o;
-
-            for (var i = 0, len = obj.text.length; i < len; i++) {
-                o = document.createElement('option');
-                o.appendChild(document.createTextNode(obj.text[i]));
-
-                if (obj.value) {
-                    o.value = obj.value[i];
-                }
-
-                f.appendChild(o);
-            }
-            return f;
-        }
-
-        if (obj.text) {
-            opts = addOptions(obj);
-            f.appendChild(opts);
-        } else {
-            for (var prop in obj) {
-                if (obj.hasOwnProperty(prop)) {
-                    labels.push(prop);
-                }
-            }
-
-            for (var i = 0, len = labels.length; i < len; i++) {
-                group = document.createElement('optgroup');
-                group.label = labels[i];
-                f.appendChild(group);
-                opts = addOptions(obj[labels[i]]);
-                group.appendChild(opts);
-            }
-        }
-        sel.appendChild(f);
-    }
-
-    // anonymous function assigned to onchange event of controlling select box
-    document.forms['demoForm'].elements['category'].onchange = function(e) {
-        // name of associated select box
-        var relName = 'choices';
-
-        // reference to associated select box 
-        var relList = this.form.elements[relName];
-
-        // get data from object literal based on selection in controlling select box (this.value)
-        var obj = Select_List_Data[relName][this.value];
-
-        // remove current option elements
-        removeAllOptions(relList, true);
-
-        // call function to add optgroup/option elements
-        // pass reference to associated select box and data for new options
-        appendDataToSelect(relList, obj);
-    };
-
-
-    // populate associated select box as page loads
-    (function() { // immediate function to avoid globals
-
-        var form = document.forms['demoForm'];
-
-        // reference to controlling select box
-        var sel = form.elements['category'];
-        sel.selectedIndex = 0;
-
-        // name of associated select box
-        var relName = 'choices';
-        // reference to associated select box
-        var rel = form.elements[relName];
-
-        // get data for associated select box passing its name
-        // and value of selected in controlling select box
-        var data = Select_List_Data[relName][sel.value];
-
-        // add options to associated select box
-        appendDataToSelect(rel, data);
-
-    }());
-</script>
 
 </html>
 <!-- end document-->
